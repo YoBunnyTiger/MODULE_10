@@ -23,20 +23,20 @@ print(f'Работа потоков {time_end - time_start}')
 
 time_start = datetime.now()  # Время начала работы потоков
 
-five = Thread(target=write_words, args=(10, 'example5.txt'))
-six = Thread(target=write_words, args=(30, 'example6.txt'))
-seven = Thread(target=write_words, args=(200, 'example7.txt'))
-eight = Thread(target=write_words, args=(100, 'example8.txt'))
+params = [(10, 'example5.txt'),
+          (30, 'example6.txt'),
+          (200, 'example7.txt'),
+          (100, 'example8.txt')]
 
-five.start()
-six.start()
-seven.start()
-eight.start()
+threads = []
 
-five.join()
-six.join()
-seven.join()
-eight.join()
+for param in params:
+    thread = Thread(target=write_words, args=param)
+    threads.append(thread)
+    thread.start()
+
+for thread in threads:
+    thread.join()
 
 time_end = datetime.now()  # Время окончания потоков
 print(f'Работа потоков {time_end - time_start}')
